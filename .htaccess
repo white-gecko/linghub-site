@@ -37,11 +37,11 @@
 
     # do not rewrite requests on files with the whitelisted extensions under extensions (if file exists)
     RewriteCond %{REQUEST_FILENAME} !-f [OR]
-    RewriteCond %{REQUEST_URI} !/extensions/.*/.*\.(js|css|gif|ico|png|jpg|svg)$
+    RewriteCond %{REQUEST_URI} !/extensions/.*/.*\.(js|css|gif|ico|png|jpg|svg|ttf|woff)$
 
     # do not rewrite requests on files with the whitelisted extensions under libraries/RDFauthor (if file exists)
     RewriteCond %{REQUEST_FILENAME} !-f [OR]
-    RewriteCond %{REQUEST_URI} !/libraries/RDFauthor/.*/.*\.(js|css|gif|ico|png|jpg|svg)$
+    RewriteCond %{REQUEST_URI} !/libraries/RDFauthor/.*/.*\.(js|css|gif|ico|png|jpg|svg|ttf|woff)$
 
     RewriteRule ^.*$ index.php
 

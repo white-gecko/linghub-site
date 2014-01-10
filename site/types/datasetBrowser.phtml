@@ -1,0 +1,101 @@
+<div class="page-header">
+    <h1><?php echo $this->title ?></h1>
+</div>
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchQuery">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="searchBtn">Search</button>
+      </span>
+        </div>
+        <!-- /input-group -->
+        <div class="row" id="loading">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-2">
+                <div><img src="extensions/site/sites/local/img/loading.gif"/></div>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+    <div class="col-lg-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <div class="list-group" id="resultList">
+        </div>
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+<script type="text/javascript">
+    $("#searchBtn").bind("click", function (e) {
+        getResults($("#searchQuery").val());
+    });
+
+    $("body").keyup(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code==13) {
+            e.preventDefault();
+            getResults($("#searchQuery").val());
+        }
+    });
+
+    $("#searchQuery").bind('input propertychange', function(evt) {
+        // If it's the propertychange event, make sure it's the value that changed.
+        if (window.event && event.type == "propertychange" && event.propertyName != "value")
+            return;
+
+        // Clear any previously set timer before setting a fresh one
+        window.clearTimeout($(this).data("timeout"));
+        $(this).data("timeout", setTimeout(function () {
+            var val = ''+$(searchQuery).val();
+            if(val.length>=3){
+                getResults(val);
+            }
+        }, 500));
+    });
+
+
+    function getResults(searchQuery) {
+        $("#resultList").html('');
+        $.ajax({
+            url: '/linghub/linghubsearch/fulltext',
+            type: 'POST',
+            data: {query: searchQuery},
+            dataType: 'json',
+            beforeSend: function () {
+                $('#loading').show();
+            },
+            success: function (data, textStatus, xhr) {
+
+                $.each(data, function (k, v) {
+                    var encodedUrl = encodeURIComponent(k);
+
+                    var container = '<a href="http://lgd.aksw.org/linghub/site/local/?r=' + encodedUrl + '" class="list-group-item">';
+                    container += '<h4 class="list-group-item-heading">' + k + '</h4>';
+                    container += '<p class="list-group-item-text">' + v['http://purl.org/dc/terms/description'][0]['value']
+                        + '</p>';
+                    container += '</a>';
+                    $("#resultList").append(container);
+                });
+
+            },
+            complete:function(){
+                $('#loading').hide();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // $('#'+id+' .contentarea').html(textStatus);
+            }
+        });
+    }
+
+</script>
+
+<?php
+// uses default content properties
+//echo $this->literal(array('tag' => 'div', 'class' => 'content'));
+?>

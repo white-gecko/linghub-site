@@ -12,76 +12,37 @@
      );
 ?>
 
-<!-- <form method="post" class="form-inline" target="<?= $target ?>" > -->
+<form id="datasetForm" method="post" class="form-inline" target="<?= $target ?>" >
 <div class="row">
   <div class="col-lg-6">
   <label class="control-label" for="datasetUri">Dataset URI</label>
     <div class="input-group">
-      <input type="url" class="form-control" name="datasetUri" placeholder="Please enter your dataset URI here" />
+      <input type="url" class="form-control" id="datasetUri" name="datasetUri" placeholder="Please enter your dataset URI here" />
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit">Register/Update</button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
-<!-- </form> -->
+</form>
 
 
-        <div class="list-group" id="resultList">
-        </div>
+<div id="resultList">
+</div>
 <script type="text/javascript">
-    $("#submitBtn").bind("click", function (e) {
-        getResults($("#datasetUri").val());
-    });
-
-    $("body").keyup(function(e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code==13) {
-            e.preventDefault();
-            getResults($("#datasetUri").val());
+    $("#datasetForm").submit(
+        function(event) {
+            alert("form wurde abgeschickt");
+            $.post(
+                "<?= $target ?>",
+                $("#datasetForm").serializeArray(),
+                function(data) {
+                    $("#resultList").html(data);
+               }
+            );
+            event.preventDefault();
         }
-    });
-
-    $("#datasetUri").bind('input propertychange', function(evt) {
-        // If it's the propertychange event, make sure it's the value that changed.
-        if (window.event && event.type == "propertychange" && event.propertyName != "value")
-            return;
-
-        // Clear any previously set timer before setting a fresh one
-        window.clearTimeout($(this).data("timeout"));
-        $(this).data("timeout", setTimeout(function () {
-            var val = ''+$(searchQuery).val();
-            if(val.length>=3){
-                getResults(val);
-            }
-        }, 500));
-    });
-
-
-    function getResults(searchQuery) {
-        $("#resultList").html('');
-        $.ajax({
-            url: '<?= $target ?>',
-            type: 'POST',
-            data: {query: searchQuery},
-            dataType: 'json',
-            beforeSend: function () {
-                $('#loading').show();
-            },
-            success: function (data, textStatus, xhr) {
-
-	        $("#resultList").append(data);
-
-            },
-            complete:function(){
-                $('#loading').hide();
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                // $('#'+id+' .contentarea').html(textStatus);
-            }
-        });
-    }
-
+    );
 </script>
 
 <?php

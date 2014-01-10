@@ -24,7 +24,7 @@ class LinghubController extends OntoWiki_Controller_Component
 
         $datasetUri = $this->_request->datasetUri;
 
-	$owApp = OntoWiki::getInstance();
+        $owApp = OntoWiki::getInstance();
 
         $logger = $owApp->logger;
         $model = $owApp->selectedModel;
@@ -54,7 +54,7 @@ class LinghubController extends OntoWiki_Controller_Component
             $logger->err('LinkeddataHelper: Import error on fetching: "' . $datasetUri . '"');
         }
 
-	$this->_response->setBody(json_encode($newStatements));
+        $this->_response->setBody(json_encode($newStatements));
 
     }
 

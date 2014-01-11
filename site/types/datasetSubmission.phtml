@@ -19,25 +19,45 @@
     <div class="input-group">
       <input type="url" class="form-control" id="datasetUri" name="datasetUri" placeholder="Please enter your dataset URI here" />
       <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">Register/Update</button>
+        <button id="registerButton" class="btn btn-default" type="submit">Register/Update</button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 </form>
 
-
-<div id="resultList">
+<div id="result">
 </div>
 <script type="text/javascript">
-    $("#datasetForm").submit(
+    $('#datasetForm').submit(
         function(event) {
-            alert("form wurde abgeschickt");
+            $('#result').spin();
+            var formData = $('#datasetForm').serializeArray();
             $.post(
-                "<?= $target ?>",
-                $("#datasetForm").serializeArray(),
+                '<?= $target ?>',
+                formData,
                 function(data) {
-                    $("#resultList").html(data);
+                    var data = JSON.parse(data);
+                    if (data.type == 'data') {
+                        $('#result').html('<dl id="definitionList" class="dl-horizontal"></dl>');
+                        $.each(data.content[formData[0].value], function(k,v) {
+                            var title = data.titles[k];
+                            var property = '<dt>' + title + '</dt>';
+                            for (var i in v) {
+                                property += '<dd>' + v[i].value + '</dd>';
+                            }
+                            $('#definitionList').append(property);
+                        });
+                    } else {
+                        var errorMessage;
+                        if (data.type == 'error') {
+                            errorMessage = 'The result is not in the correct format.';
+                        } else {
+                            errorMessage = data.message;
+                        }
+
+                        $('#result').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    }
                }
             );
             event.preventDefault();

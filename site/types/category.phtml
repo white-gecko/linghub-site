@@ -1,0 +1,12 @@
+<div class="page-header">
+  <h1><?= $this->title ?> <small></h1>
+</div>
+
+
+<?php
+echo $this->query(
+    array(
+        'where' => '?resourceUri dct:subject <' . $this->resourceUri . '>',
+    )
+);
+?>

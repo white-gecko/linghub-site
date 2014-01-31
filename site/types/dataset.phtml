@@ -1,11 +1,30 @@
 <div class="page-header">
-  <h1><?= $this->title ?> <small><?= $this->resourceUri ?></small></h1>
+  <h1><?= $this->title ?> <small>&lt;<?= $this->resourceUri ?>&gt; a void:Dataset</small></h1>
 </div>
 
+<h2>Categories</h2>
+<div id="tags">
+<?php
+echo $this->query(
+    array(
+        'where' => '<' . $this->resourceUri . '> dct:subject ?resourceUri',
+        'template' => 'category'
+    )
+);
+?>
+</div>
 
+<h2>Description</h2>
 <?= $this->literal(array('property' => 'dct:description', 'tag' => 'div', 'class' => 'content')) ?>
 
+<?php
+var_dump($this->description);
+?>
 
+<dl class="horizontal-dl">
+<?php
+?>
+</dl>
 
 <?php
 /*
@@ -15,6 +34,4 @@
                                               a void:Dataset ;
                                               rdfs:label "Example" ;
                                               foaf:homepage <http://aksw.org/> .
-
-
 */

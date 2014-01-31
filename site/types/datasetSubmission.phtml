@@ -50,7 +50,7 @@
                         });
                     } else {
                         var errorMessage;
-                        if (data.type == 'error') {
+                        if (data.type != 'error') {
                             errorMessage = 'The result is not in the correct format.';
                         } else {
                             errorMessage = data.message;

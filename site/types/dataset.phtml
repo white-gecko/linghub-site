@@ -1,37 +1,106 @@
 <div class="page-header">
-  <h1><?= $this->title ?> <small>&lt;<?= $this->resourceUri ?>&gt; a void:Dataset</small></h1>
+    <h1><?= $this->title ?>
+        <small>&lt;<?= $this->resourceUri ?>&gt; a void:Dataset</small>
+    </h1>
 </div>
 
-<h2>Categories</h2>
-<div id="tags">
-<?php
-echo $this->query(
-    array(
-        'where' => '<' . $this->resourceUri . '> dct:subject ?resourceUri',
-        'template' => 'category'
-    )
-);
-?>
+<div class="row">
+    <div class="col-md-8">
+        <h2>Categories</h2>
+
+        <div id="tags">
+            <?php
+            echo $this->query(
+                array(
+                    'where' => '<' . $this->resourceUri . '> dct:subject ?resourceUri',
+                    'template' => 'category'
+                )
+            );
+            ?>
+        </div>
+        <h2>Description</h2>
+        <?= $this->literal(array('property' => 'dct:description', 'tag' => 'div', 'class' => 'content')) ?>
+
+        <h2>example resources</h2>
+        <ul id="exampleResources" class="list-unstyled">
+            <?php
+            echo $this->query(
+                array(
+                    'where' => '<' . $this->resourceUri . '> void:exampleResource ?resourceUri',
+                    'template' => 'exampleResource'
+                )
+            );
+            ?>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">InfoBox</h3>
+            </div>
+            <div class="panel-body" id="infoBoxList">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td class="col-md-5"><b>License:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:license', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>issued at:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:issued', 'tag' => 'time', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>modified at:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:modified', 'tag' => 'time', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>version</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:version', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>latest Version</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:latestVersion', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>language</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>uriSpace</b></td>
+                            <td><?= $this->literal(array('property' => 'void:uriSpace', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>homepage</b></td>
+                            <td><?= $this->literal(array('property' => 'foaf:homepage', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>page</b></td>
+                            <td><?= $this->literal(array('property' => 'foaf:page', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+
+                        <tr>
+                            <td><b>sparqlEndpoint</b></td>
+                            <td><?= $this->literal(array('property' => 'void:sparqlEndpoint', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>language</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
-<h2>Description</h2>
-<?= $this->literal(array('property' => 'dct:description', 'tag' => 'div', 'class' => 'content')) ?>
 
 <?php
-var_dump($this->description);
+//var_dump($this->description);
 ?>
 
 <dl class="horizontal-dl">
-<?php
-?>
+    <?php
+    ?>
 </dl>
 
-<?php
-/*
-<http://lgd.aksw.org/linghub/Dataset/Example> <dcterms:description> "This is an example Dataset to showcase the basic usage of our hub" ;
-                                              <dcterms:license> <http://creativecommons.org/licenses/by/3.0/> ;
-                                              <dcterms:title> "Example Dataset" ;
-                                              a void:Dataset ;
-                                              rdfs:label "Example" ;
-                                              foaf:homepage <http://aksw.org/> .
-*/

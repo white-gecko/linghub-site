@@ -13,3 +13,18 @@
 #resultList{
     margin-top: 10px;
 }
+
+.table-responsive > table{
+    table-layout: fixed;
+}
+
+#infoBoxList td{
+    white-space:pre;
+    word-wrap: break-word;
+    line-height: 1.7em;
+}
+#infoBoxList .content{
+    white-space:pre;
+    word-wrap: break-word;
+    line-height: 1.7em;
+}

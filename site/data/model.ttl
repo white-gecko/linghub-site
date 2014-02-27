@@ -1,6 +1,6 @@
 # Exported with the Erfurt API - http://aksw.org/Projects/Erfurt
 
-@base <http://metex.hcls.deri.ie/> .
+@base <http://metex.hcls.deri.org/> .
 @prefix sysont: <http://ns.ontowiki.net/SysOnt/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

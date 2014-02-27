@@ -125,6 +125,17 @@ class LinghubController extends OntoWiki_Controller_Component
         return $titles;
     }
 
+    private function _trySparqlEndpoint ($uri)
+    {
+        if (strstr($uri, -1) == '/') {
+            $endpointUri = $uri . 'sparql'
+        } else {
+            $endpointUri = $uri . '/sparql'
+        }
+
+
+    }
+
     private function _filterByApplicationProfile ($statements, $type = null)
     {
         $applicationProfile = array(

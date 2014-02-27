@@ -72,18 +72,18 @@ body {
             </button>
             <a class="navbar-brand" href="#"><?= $this->siteConfig['name'] ?></a>
         </div>
-            <?php
-            $navResource = $this->templateOptions()->getValue('http://rdfs.org/ns/void#rootResource');
-            $navOptions = array(
-                'navResource' => $navResource,
-                'navId' => 'navbar-main',
-                'suffix'    => '<!-- /#nav-main -->',
-                'activeUrl' => $this->resourceUri,
-                'listClass' => 'nav navbar-nav',
-                'navClass' => 'navbar-collapse collapse'
-            );
-            echo $this->navigationList($navOptions);
-            ?>
+        <?php
+        $navResource = $this->templateOptions()->getValue('http://rdfs.org/ns/void#rootResource');
+        $navOptions = array(
+            'navResource' => $navResource,
+            'navId' => 'navbar-main',
+            'suffix'    => '<!-- /#nav-main -->',
+            'activeUrl' => $this->resourceUri,
+            'listClass' => 'nav navbar-nav',
+            'navClass' => 'navbar-collapse collapse'
+        );
+        echo $this->navigationList($navOptions);
+        ?>
     </div>
 </div>
 

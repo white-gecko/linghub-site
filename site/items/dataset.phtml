@@ -1,0 +1,41 @@
+<?php
+/**
+ * This file is part of the {@link http://ontowiki.net OntoWiki} project.
+ *
+ * @copyright Copyright (c) 2011, {@link http://aksw.org AKSW}
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License (GPL)
+ */
+
+/**
+ * querylist li plain element template
+ *
+ * this template is used in combination with the querylist helper to render
+ * lists of resources which match a given SPARQL query
+ *
+ * TODO: make more independend from the query (e.g. take the first projection variable)
+ */
+
+// prepare vars from the querylist helper
+$resourceUri = $this->resourceUri;
+$primary = false;
+if (isset($this->active)) {
+    if ($resourceUri == $this->active) {
+        $primary = true;
+    }
+}
+echo '<li>';
+// if we have a literal item, do not do anything but an li item
+if (!Erfurt_Uri::check($resourceUri)) {
+    echo '<span class="">' . $resourceUri . '</li>';
+} else {
+?>
+    <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+    <a href="<?= $this->url($resourceUri) ?>">
+        <span about="<?= $resourceUri ?>">
+        <?= $resourceUri ?>
+    </span>
+    </a><?= $primary ? ' (primary dataset)' : '' ?>
+<?php
+
+}
+echo '</li>';

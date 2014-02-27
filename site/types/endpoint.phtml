@@ -1,0 +1,210 @@
+<?php
+$titleSubject = '&lt;' . $this->resourceUri . '&gt;';
+if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
+    $this->title = $titleSubject;
+    $titleSubject = '';
+}
+?>
+<div class="page-header">
+    <h1><?= $this->title ?>
+        <small><?= $titleSubject ?> a <span title="http://www.w3.org/ns/sparql-service-description#Service">sd:Service</span></small>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <a href="<?= $this->resourceUri ?>"><button type="button" class="btn btn-default" >Go to endpoint</button></a>
+        <a href="<?= $this->Url(array('uri' => $this->resourceUri, 'stayOnSite' => false)) ?>"><button type="button" class="btn btn-default" >Show resource in OntoWiki</button></a>
+        <a href=""><button type="button" class="btn btn-default" title="Request this resource to be added to the update queue">Update</button></a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Export … <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'turtle')) ?>">as Turtle</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfxml')) ?>">as RDF/XML</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfjson')) ?>">as RDF/Json (Talis)</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfn3')) ?>">as Notation 3</a></li>
+            </ul>
+        </div>
+        <h2>Service Level metadata</h2>
+        <dl class="dl-horizontal">
+            <dt><span class="glyphicon glyphicon-stats"></span> Status</dt>
+            <dd>
+                <?php
+                    $string = $this->query(
+                        array(
+                            'where' => '<' . $this->resourceUri . '> ends:status ?resourceUri. optional {?resourceUri dct:date ?date}',
+                            'template' => 'endpointstatus',
+                            'orderby' => 'desc(?date)',
+                            'limit' => 1
+                        )
+                    );
+                    if (empty($string)) {
+                        echo 'n/a';
+                    } else {
+                        echo $string;
+                    }
+                ?>
+            </dd>
+            <dt><span class="glyphicon glyphicon-pencil"></span> Supported language</dt>
+            <dd>
+                <?php
+                    $string = $this->query(
+                        array(
+                            'where' => '<' . $this->resourceUri . '> sd:supportedLanguage ?resourceUri',
+                            'template' => 'urls',
+                        )
+                    );
+                    if (empty($string)) {
+                        echo 'n/a';
+                    } else {
+                        echo $string;
+                    }
+                ?>
+            </dd>
+            <dt><span class="glyphicon glyphicon-cog"></span> Features</dt>
+            <dd>
+                <?php
+                    $string = $this->query(
+                        array(
+                            'where' => '<' . $this->resourceUri . '> sd:feature ?resourceUri',
+                            'template' => 'urls',
+                        )
+                    );
+                    if (empty($string)) {
+                        echo 'n/a';
+                    } else {
+                        echo $string;
+                    }
+                ?>
+            </dd>
+            <dt><span class="glyphicon glyphicon-file"></span> Result formats</dt>
+            <dd>
+                <?php
+                    $string = $this->query(
+                        array(
+                            'where' => '<' . $this->resourceUri . '> sd:resultFormat ?resourceUri',
+                            'template' => 'urls',
+                        )
+                    );
+                    if (empty($string)) {
+                        echo 'n/a';
+                    } else {
+                        echo $string;
+                    }
+                ?>
+            </dd>
+        </dl>
+
+        <h2>Datasets <small>This endpoint provides access to the following datasets</small></h2>
+            <?php
+                $count = $this->count(array('where' => '<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri'));
+                if ($count > 0) {
+                    echo $this->query(
+                        array(
+                            'where' => '{<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri } union {<' . $this->resourceUri . '> voidx:primaryDataset ?resourceUri }',
+                            'template' => 'dataset',
+                            'limit' => 10,
+                            'active' => $this->literal(array('property' => 'voidx:primaryDataset', 'plain' => 'true')),
+                            'prefix' => '<ul class="list-unstyled">',
+                            'suffix' => '</ul>',
+                        )
+                    );
+                    if ($count > 10) {
+                        echo 'and more …';
+                    }
+                } else {
+                    echo 'No datasets found';
+                }
+            ?>
+        <h2>Data Level metadata</h2>
+        <dl class="dl-horizontal">
+            <dt>Triples</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:triples')); ?></dd>
+            <dt>Entities</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:entities')); ?></dd>
+            <dt>Classes</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:classes')); ?></dd>
+            <dt>Properties</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:properties')); ?></dd>
+            <dt>Distinct subjects</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:distinctSubjects')); ?></dd>
+            <dt>Distinct objects</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:distinctObjects')); ?></dd>
+        </dl>
+            <div>
+                TODO: Add output of stephans code here
+            </div>
+        <h2>Debug <small>Exceptions and other information that occured when querying the endpoint</small></h2>
+        <?= $this->literal(array('property' => 'rdfs:comment', 'tag' => 'div', 'class' => 'bs-callout bs-callout-info')) ?>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Service Level metadata</h3>
+            </div>
+            <div class="panel-body" id="infoBoxList">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td class="col-md-5"><b>License:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:license', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>issued at:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:issued', 'tag' => 'time', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>modified at:</b></td>
+                            <td><?= $this->literal(array('property' => 'dct:modified', 'tag' => 'time', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>version</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:version', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>latest Version</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:latestVersion', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>language</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>uriSpace</b></td>
+                            <td><?= $this->literal(array('property' => 'void:uriSpace', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>homepage</b></td>
+                            <td><?= $this->literal(array('property' => 'foaf:homepage', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>page</b></td>
+                            <td><?= $this->literal(array('property' => 'foaf:page', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+
+                        <tr>
+                            <td><b>sparqlEndpoint</b></td>
+                            <td><?= $this->literal(array('property' => 'void:sparqlEndpoint', 'tag' => 'a', 'class' => 'content')) ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>language</b></td>
+                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<?php
+//var_dump($this->description);
+?>
+
+<dl class="horizontal-dl">
+    <?php
+    ?>
+</dl>
+

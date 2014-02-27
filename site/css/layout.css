@@ -28,3 +28,11 @@
     word-wrap: break-word;
     line-height: 1.7em;
 }
+
+.navbar-default {
+    border-color: #00A14E;
+}
+
+.navbar-fixed-top {
+    border-width: 0 0 5px;
+}

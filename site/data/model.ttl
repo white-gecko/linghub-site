@@ -1,48 +1,70 @@
 # Exported with the Erfurt API - http://aksw.org/Projects/Erfurt
 
-@base <http://lgd.aksw.org/linghub/> .
+@base <http://metex.hcls.deri.ie/> .
 @prefix sysont: <http://ns.ontowiki.net/SysOnt/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix site: <http://ns.ontowiki.net/SysOnt/Site/> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix void: <http://rdfs.org/ns/void#> .
+@prefix voidx: <http://rdfs.org/ns/void-ext#> .
+@prefix ends: <http://labs.mondeca.com/vocab/endpointStatus#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 
 <> a owl:Ontology ;
+   rdfs:label "MetEx" ;
    void:rootResource <Navigation/Main> .
 
 <Navigation/Main> a site:Navigation ;
                   rdf:_1 <Welcome> ;
-                  rdf:_2 <Map> ;
-                  rdf:_3 <About> ;
+                  rdf:_2 <Endpoints> ;
+                  rdf:_3 <AddEndpoint> ;
+                  rdf:_4 <http://localhost:8890/sparql> ;
+                  rdf:_5 <Imprint> ;
                   rdfs:label "Main Navigation" .
 
+<http://localhost:8890/sparql> a sd:Service ;
+         rdfs:label "SPARQL endpoint";
+         sd:url <http://localhost:8890/sparql> .
+
 <Welcome> a foaf:Document ;
-          rdfs:label "Welcome"@en, "Willkommen"@de ;
-          site:content "Congratulations and welcome to the example for the [site extension](https://github.com/AKSW/site.ontowiki \"OntoWiki Site Extension ong github\") for [OntoWiki](http://ontowiki.net/ \"OntoWiki Homepage\"). This example site demonstrates some functionality which is covered by the site extension. You can take this example as a starting point for your own OntoWiki powered Site."^^sysont:Markdown ;
+          rdfs:label "Welcome"@en, "Willkommen"@de, "Fáilte"@ga ;
+          site:content "Welcome to the MetEx endpoint explorer. The scope of this project is to provide meta information for verious endpoints, mainly in the domain of lifescience and healthcair. With the help of this metadata we want to improve the execution of federated SPARQL queries."^^sysont:Markdown ;
           site:template "welcome" .
 
-<Map> a foaf:Document ;
-      rdfs:label "Map Demo" ;
-      site:content """With the map extension and the map module you can show the location of a resource in a map.
-The map reads the longitude and latitude of the resource from the model and displays it on an OpenStreetMap.
+<Browser> site:classTemplate "browser" .
+<Submission> site:classTemplate "submission" .
+sd:Service site:classTemplate "endpoint" .
+void:Dataset site:classTemplate "dataset" .
 
-This is the location of our working group in the roof of the university church at Augustusplatz in Leipzig."""^^sysont:Markdown ;
-      site:template "map" ;
-      geo:long "12.379438" ;
-      geo:lat "51.338994" .
+<AddEndpoint> a <Submission> ;
+             rdfs:label "Add Endpoint" ;
+             site:content """By entering the URI of a SPARQL endpoint you can register this endpoint at the catalog. The catalog will fetch this URI according to the Linked Data principle and retrieve all available metadata.
 
-<About> a foaf:Document ;
-        rdfs:label "About" ;
-        site:content """The site extension enables the OntoWiki to be used as Semantic-CMS. You can create resources and themes and apply the themes to the resources to display them to your readers, while the data and the presentation is completely separated. Besides the HTML representation of your resources with the templates it is also possible to query the RDF data via content-negotiation.
+If you enter an already registered endpoint you will request an update of the metadata.
 
-The most advanced demo of a running example of an OntoWiki with this extension in a production environment is [our homepage (aksw.org)](http://aksw.org).
 
-You can find further information about the extension on its [github page](https://github.com/AKSW/site.ontowiki) and in the [wiki](https://github.com/AKSW/site.ontowiki/wiki)."""^^sysont:Markdown .
+"""^^sysont:Markdown .
 
-foaf:Document site:classTemplate "document" .
+<Endpoints> a <Browser> ;
+           rdfs:label "Browse Endpoints" ;
+           site:content """Available Endpoints {{count where="?resourceUri a sd:Service . optional{ ?resourceUri ends:status ?status . ?status ends:statusIsAvailable ?available } filter(?available)"}}
+==================
+
+{{query where="?resourceUri a sd:Service . optional{ ?resourceUri ends:status ?status . ?status ends:statusIsAvailable ?available } filter(?available)" template="endpoint"}}
+
+Unavailable Endpoints {{count where="?resourceUri a sd:Service . optional{ ?resourceUri ends:status ?status . ?status ends:statusIsAvailable ?available } filter(!?available)"}}
+==================
+
+{{query where="?resourceUri a sd:Service . optional{?resourceUri ends:status ?status . ?status ends:statusIsAvailable ?available } filter(!?available)" template="endpoint"}}"""^^sysont:Markdown .
+
+<Imprint> a foaf:Document ;
+          rdfs:label "Imprint" .
 
 void:rootResource a site:TemplateOption .
 

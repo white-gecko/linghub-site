@@ -80,9 +80,13 @@ help-test:
 
 # top level target
 
-deploy: directories clean zend submodules
+custom:
+	rm -f extensions/site/sites/local
+	cd extensions/site/sites/ && ln -s ../../../site local
 
-install: directories libraries
+deploy: directories clean zend submodules custom
+
+install: directories libraries custom
 
 vagrant: directories clean submodules-developer
 	rm -rf libraries/Zend # vagrant has own zend
@@ -110,12 +114,14 @@ submodules: # read-only
 	git submodule init
 	git config submodule.libraries/Erfurt.url "https://github.com/AKSW/Erfurt.git"
 	git config submodule.libraries/RDFauthor.url "https://github.com/AKSW/RDFauthor.git"
+	git config submodule.extensions/site.url "https://github.com/AKSW/site.ontowiki.git"
 	git submodule update
 
 submodules-developer: # read-write
 	git submodule init
 	git config submodule.libraries/Erfurt.url "git@github.com:AKSW/Erfurt.git"
 	git config submodule.libraries/RDFauthor.url "git@github.com:AKSW/RDFauthor.git"
+	git config submodule.extensions/site.url "git@github.com:AKSW/site.ontowiki.git"
 	git submodule update
 
 # developer targets

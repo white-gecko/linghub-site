@@ -97,14 +97,14 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
 
         <h2>Datasets <small>This endpoint provides access to the following datasets</small></h2>
             <?php
-                $count = $this->count(array('where' => '<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri'));
+                $count = $this->count(array('where' => '{<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri } union {<' . $this->resourceUri . '> sd:defaultDataset ?resourceUri }'));
                 if ($count > 0) {
                     echo $this->query(
                         array(
-                            'where' => '{<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri } union {<' . $this->resourceUri . '> voidx:primaryDataset ?resourceUri }',
+                            'where' => '{<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri } union {<' . $this->resourceUri . '> sd:defaultDataset ?resourceUri }',
                             'template' => 'dataset',
                             'limit' => 10,
-                            'active' => $this->literal(array('property' => 'voidx:primaryDataset', 'plain' => 'true')),
+                            'active' => $this->literal(array('property' => 'sd:defaultDataset', 'plain' => 'true')),
                             'prefix' => '<ul class="list-unstyled">',
                             'suffix' => '</ul>',
                         )

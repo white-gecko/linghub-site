@@ -26,15 +26,15 @@ if (isset($this->active)) {
 echo '<li>';
 // if we have a literal item, do not do anything but an li item
 if (!Erfurt_Uri::check($resourceUri)) {
-    echo '<span class="">' . $resourceUri . '</li>';
+    echo '<span>' . $resourceUri . '</li>';
 } else {
 ?>
     <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
     <a href="<?= $this->url($resourceUri) ?>">
-        <span about="<?= $resourceUri ?>">
+        <span <?= ($primary ? ' class="li-active"' : '' ) ?> about="<?= $resourceUri ?>">
         <?= $resourceUri ?>
     </span>
-    </a><?= $primary ? ' (primary dataset)' : '' ?>
+    </a><?= $primary ? ' (default dataset)' : '' ?>
 <?php
 
 }

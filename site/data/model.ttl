@@ -34,7 +34,7 @@
 
 <Welcome> a foaf:Document ;
           rdfs:label "Welcome"@en, "Willkommen"@de, "Fáilte"@ga ;
-          site:content "Welcome to the MetEx endpoint explorer. The scope of this project is to provide meta information for verious endpoints, mainly in the domain of lifescience and healthcair. With the help of this metadata we want to improve the execution of federated SPARQL queries."^^sysont:Markdown ;
+          site:content "Welcome to the MetEx endpoint explorer. The scope of this project is to provide meta information for verious endpoints, mainly in the domain of lifescience and healthcare. With the help of this metadata we want to improve the execution of federated SPARQL queries."^^sysont:Markdown ;
           site:template "welcome" .
 
 <Browser> site:classTemplate "browser" .

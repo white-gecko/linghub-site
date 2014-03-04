@@ -36,3 +36,7 @@
 .navbar-fixed-top {
     border-width: 0 0 5px;
 }
+
+.li-active {
+    background-color: #ebebeb
+}

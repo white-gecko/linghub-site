@@ -13,7 +13,26 @@ if (substr($this->title, 0, 2) == 'ns') {
 
 <div class="row">
     <div class="col-md-8">
-        SPARQL endpoint: <?= $this->literal( array( 'property' => 'void:sparqlEndpoint')); ?>
+        <?php
+            $endpointUri = $this->literal(array('property' => 'void:sparqlEndpoint', 'plain' => true));
+        ?>
+        <?php if(!empty($endpointUri)): ?>
+        <a href="<?= $this->Url(array('uri' => $endpointUri)) ?>">
+        <?php endif; ?>
+            <button <?= (empty($endpointUri) ? 'disabled="true"' : '') ?> type="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back to endpoint</button>
+        <?php if(!empty($endpointUri)): ?>
+        </a>
+        <?php endif; ?>
+        <a href="<?= $this->Url(array('uri' => $this->resourceUri, 'stayOnSite' => false)) ?>"><button type="button" class="btn btn-default" >Show resource in OntoWiki</button></a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Export … <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'turtle')) ?>">as Turtle</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfxml')) ?>">as RDF/XML</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfjson')) ?>">as RDF/Json (Talis)</a></li>
+                <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfn3')) ?>">as Notation 3</a></li>
+            </ul>
+        </div>
         <h2>Technology and Provenance Level metadata</h2>
         <dl class="dl-horizontal">
             <dt>Creation date</dt>
@@ -50,6 +69,10 @@ if (substr($this->title, 0, 2) == 'ns') {
             <dd><?= $this->literal( array( 'property' => 'void:distinctSubjects')); ?></dd>
             <dt>Distinct objects</dt>
             <dd><?= $this->literal( array( 'property' => 'void:distinctObjects')); ?></dd>
+            <dt>Example resource</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:exampleResource')); ?></dd>
+            <dt>URI regex pattern</dt>
+            <dd><?= $this->literal( array( 'property' => 'void:uriRegexPattern')); ?></dd>
         </dl>
         See also: <?= $this->literal( array( 'property' => 'rdfs:seeAlso')); ?>
 

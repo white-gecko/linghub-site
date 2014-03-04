@@ -80,9 +80,13 @@ help-test:
 
 # top level target
 
-deploy: directories clean zend submodules
+custom:
+	rm -f extensions/site/sites/local
+	cd extensions/site/sites/ && ln -s ../../../site local
 
-install: directories libraries
+deploy: directories clean zend submodules custom
+
+install: directories libraries custom
 
 vagrant: directories clean submodules-developer
 	rm -rf libraries/Zend # vagrant has own zend

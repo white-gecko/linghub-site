@@ -13,29 +13,34 @@ function StructureBrowser (resourceUri, descriptionSource) {
     }
 
     this._displayStructure = function (element, data) {
-        var browserStructure = $("<ul></ul>");
-        $.each(
-            data,
-            function (domain, predicateStr) {
-                var domainNode = $('<li class="domainNode"><a class="title">' + domain + '</a></li>');
-                var domainStructure = $('<ul class="domainStructure"></ul>').hide();
-                browserStructure.append(domainNode.append(domainStructure));
-                $.each(
-                    predicateStr,
-                    function (predicate, rangeLi) {
-                        var predicateNode = $('<li class="predicateNode"><a class="title">' + predicate + '</a></li>');
-                        var predicateStructure = $('<ul class="predicateStructure"></ul>').hide();
-                        domainStructure.append(predicateNode.append(predicateStructure))
-                        $.each(
-                            rangeLi,
-                            function (i, range) {
-                                predicateStructure.append('<li class="rangeNode">' + range + '</li>')
-                            }
-                        );
-                    }
-                );
-            }
-        );
+        var browserStructure;
+        if (data.length < 1) {
+            browserStructure = $("<span>No structural description available.</span>");
+        } else {
+            browserStructure = $("<ul></ul>");
+            $.each(
+                data,
+                function (domain, predicateStr) {
+                    var domainNode = $('<li class="domainNode"><a class="title">' + domain + '</a></li>');
+                    var domainStructure = $('<ul class="domainStructure"></ul>').hide();
+                    browserStructure.append(domainNode.append(domainStructure));
+                    $.each(
+                        predicateStr,
+                        function (predicate, rangeLi) {
+                            var predicateNode = $('<li class="predicateNode"><a class="title">' + predicate + '</a></li>');
+                            var predicateStructure = $('<ul class="predicateStructure"></ul>').hide();
+                            domainStructure.append(predicateNode.append(predicateStructure))
+                            $.each(
+                                rangeLi,
+                                function (i, range) {
+                                    predicateStructure.append('<li class="rangeNode">' + range + '</li>')
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
         element.replaceWith(browserStructure);
         this._bindEvents();
     }

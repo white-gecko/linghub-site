@@ -108,7 +108,7 @@ rdf:type a owl:ObjectProperty ;
 formats:N-Triples a formats:Format ;
                   dct:created "2010-05-04" ;
                   dct:modified "2013-10-29" ;
-                  rdfs:label "Turtle" ;
+                  rdfs:label "N-Triples" ;
                   rdfs:isDefinedBy <http://www.w3.org/TR/n-triples/> ;
                   rdfs:comment "N-Triples is defined  the “N-Triples” W3C Recommendation track document. It uses the general media type: ‘application/n-triples’ and a preferred suffix: ‘.nt’." ;
                   dct:description "Unique identifier for the RDF serialization in N-Triples" ;

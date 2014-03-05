@@ -1,0 +1,15 @@
+<div class="box">
+    <h2>
+        <?php echo $this->title ?>
+    </h2>
+    <div class="block">
+        <dl>
+        <?= $this->literal(array('property' => 'formats:media_type', 'tag' => 'dd', 'prefix' => '<dt>Media-Type</dt>')) ?>
+        <?= $this->literal(array('property' => 'formats:prefered_suffix', 'tag' => 'dd', 'prefix' => '<dt>Prefered Suffix</dt>')) ?>
+        <?= $this->literal(array('property' => 'dct:description', 'tag' => 'dd', 'prefix' => '<dt>Description</dt>')) ?>
+        <?= $this->literal(array('property' => 'rdfs:comment', 'tag' => 'dd', 'class' => 'dd', 'prefix' => '<dt>Comment</dt>')) ?>
+        <?= $this->literal(array('property' => 'rdfs:isDefinedBy', 'tag' => 'dd', 'prefix' => '<dt>Is defined by</dt>')) ?>
+        <?= $this->literal(array('property' => 'rdfs:seeAlso', 'tag' => 'dd', 'prefix' => '<dt>See also</dt>')) ?>
+        </dl>
+    </div>
+</div>

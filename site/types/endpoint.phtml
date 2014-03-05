@@ -51,7 +51,7 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                     $string = $this->query(
                         array(
                             'where' => '<' . $this->resourceUri . '> sd:supportedLanguage ?resourceUri',
-                            'template' => 'urls',
+                            'template' => 'liplain',
                         )
                     );
                     if (empty($string)) {
@@ -67,7 +67,7 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                     $string = $this->query(
                         array(
                             'where' => '<' . $this->resourceUri . '> sd:feature ?resourceUri',
-                            'template' => 'urls',
+                            'template' => 'liplain',
                         )
                     );
                     if (empty($string)) {
@@ -83,7 +83,7 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                     $string = $this->query(
                         array(
                             'where' => '<' . $this->resourceUri . '> sd:resultFormat ?resourceUri',
-                            'template' => 'urls',
+                            'template' => 'liplain',
                         )
                     );
                     if (empty($string)) {

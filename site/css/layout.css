@@ -40,3 +40,7 @@
 .li-active {
     background-color: #ebebeb
 }
+
+.domainNode .title, .predicateNode .title {
+    cursor:pointer;
+}

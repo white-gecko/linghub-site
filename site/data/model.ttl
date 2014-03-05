@@ -15,6 +15,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix pav: <http://purl.org/pav/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix formats: <http://www.w3.org/ns/formats/> .
 
 <> a owl:Ontology ;
    rdfs:label "MetEx" ;
@@ -41,6 +42,9 @@
 <Submission> site:classTemplate "submission" .
 sd:Service site:classTemplate "endpoint" .
 void:Dataset site:classTemplate "dataset" .
+formats:Format site:classTemplate "description" .
+sd:Feature site:classTemplate "description" .
+sd:Language site:classTemplate "description" .
 
 <AddEndpoint> a <Submission> ;
              rdfs:label "Add Endpoint" ;
@@ -100,3 +104,105 @@ rdf:_10 a rdfs:ContainerMembershipProperty ;
 
 rdf:type a owl:ObjectProperty ;
          rdfs:label "typ"@de, "type"@en .
+
+formats:N-Triples a formats:Format ;
+                  dct:created "2010-05-04" ;
+                  dct:modified "2013-10-29" ;
+                  rdfs:label "Turtle" ;
+                  rdfs:isDefinedBy <http://www.w3.org/TR/n-triples/> ;
+                  rdfs:comment "N-Triples is defined  the “N-Triples” W3C Recommendation track document. It uses the general media type: ‘application/n-triples’ and a preferred suffix: ‘.nt’." ;
+                  dct:description "Unique identifier for the RDF serialization in N-Triples" ;
+                  formats:preferred_suffix ".nt" ;
+                  formats:media_type "application/n-triples" ;
+                  dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:N3 a formats:Format ;
+           dct:created "2010-05-04" ;
+           dct:modified "2013-03-25" ;
+           rdfs:label "N3" ;
+           rdfs:isDefinedBy <http://www.w3.org/TeamSubmission/n3/> ;
+           rdfs:comment "N3 is defined by the “Notation3 (N3): A readable RDF syntax” W3C Team Submission." ;
+           rdfs:seeAlso <http://www.w3.org/TeamSubmission/n3/#mimetype> ;
+           dct:description "Unique identifier for the N3 RDF syntax" ;
+           formats:media_type "text/rdf+n3" ;
+           dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:RDF_XML a formats:Format ;
+                dct:created "2010-05-04" ;
+                dct:modified "2013-03-25" ;
+                rdfs:label "RDF/XML" ;
+                rdfs:isDefinedBy <http://www.w3.org/TR/rdf-syntax-grammar/> ;
+                rdfs:comment "RDF/XML is defined by the “RDF/XML Syntax Specification” W3C Recommendation." ;
+                rdfs:seeAlso <http://www.w3.org/TR/rdf-syntax-grammar/#section-MIME-Type> ;
+                dct:description "Unique identifier for the RDF serialization in XML (RDF/XML)" ;
+                formats:preferred_suffix ".rdf" ;
+                formats:media_type "application/rdf+xml" ;
+                dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:RDFa a formats:Format ;
+             dct:created "2010-05-04" ;
+             dct:modified "2013-03-25" ;
+             rdfs:label "RDFa" ;
+             rdfs:isDefinedBy <http://www.w3.org/TR/rdfa-core/> ;
+             rdfs:comment "RDFa is defined by the “RDFa Core 1.1: Syntax and processing rules for embedding RDF through attributes” W3C Recommendation." ;
+             dct:description "Unique Identifier for the RDFa RDF Serialization Format" ;
+             dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:SPARQL_Results_CSV a formats:Format ;
+                           dct:created "2011-10-19" ;
+                           dct:modified "2013-03-25" ;
+                           rdfs:label "SPARQL Results CSV" ;
+                           rdfs:isDefinedBy <http://www.w3.org/TR/sparql11-results-csv-tsv/> ;
+                           rdfs:comment "SPARQL Results in CSV is defined by the “SPARQL 1.1 Query Results CSV and TSV Formats” W3C Recommendation." ;
+                           rdfs:seeAlso <http://www.rfc-editor.org/rfc/rfc4180.txt> ;
+                           dct:description "Unique identifier for the SPARQL Results in CSV file format" ;
+                           formats:preferred_suffix ".csv" ;
+                           formats:media_type "text/csv" ;
+                           dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:SPARQL_Results_JSON a formats:Format ;
+                            dct:created "2010-05-03" ;
+                            dct:modified "2013-03-25" ;
+                            rdfs:label "SPARQL Results JSON" ;
+                            rdfs:isDefinedBy <http://www.w3.org/TR/sparql11-results-json/> ;
+                            rdfs:comment "SPARQL Results in JSON is defined by the “SPARQL 1.1 Query Results JSON Format” W3C Recommendation." ;
+                            rdfs:seeAlso <http://www.w3.org/TR/sparql11-results-json/#content-type> ;
+                            dct:description "Unique identifier for the SPARQL Results in JSON file format" ;
+                            formats:preferred_suffix ".srj" ;
+                            formats:media_type "application/sparql-results+json" ;
+                            dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:SPARQL_Results_XML a formats:Format ;
+                           rdfs:label "SPARQL Results XML" ;
+                           rdfs:isDefinedBy <http://www.w3.org/TR/rdf-sparql-XMLres/> ;
+                           rdfs:comment "SPARQL Results in XML is defined by the “SPARQL Query Results XML Format” W3C Recommendation." ;
+                           rdfs:seeAlso <http://www.w3.org/TR/rdf-sparql-XMLres/#mime> ;
+                           dct:description "Unique identifier for the SPARQL Results in XML file format" ;
+                           dct:date "2010-05-03" ;
+                           formats:preferred_suffix ".srx" ;
+                           formats:media_type "application/sparql-results+xml" ;
+                           dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+formats:Turtle a formats:Format ;
+               dct:created "2010-05-03" ;
+               dct:modified "2013-03-25" ;
+               rdfs:label "Turtle" ;
+               rdfs:isDefinedBy <http://www.w3.org/TR/turtle/> ;
+               rdfs:comment "Turtle is defined by the “Turtle - Terse RDF Triple Language” W3C Candidate Recommendation." ;
+               rdfs:seeAlso <http://www.w3.org/TR/turtle/#sec-mediaReg> ;
+               dct:description "Unique identifier for the RDF Serialization in Turtle" ;
+               formats:preferred_suffix ".ttl" ;
+               formats:media_type "text/turtle" ;
+               dct:creator <http://www.ivan-herman.net/foaf#me> .
+
+sd:DereferencesURIs a sd:Feature ;
+                    rdfs:label "Dereferences URIs" ;
+                    rdfs:comment "sd:DereferencesURIs, when used as the object of the sd:feature property, indicates that a SPARQL service will dereference URIs used in FROM/FROM NAMED and USING/USING NAMED clauses and use the resulting RDF in the dataset during query evaluation." .
+
+sd:SPARQL10Query a sd:Language ;
+                 rdfs:label "SPARQL 1.0 Query" ;
+                 rdfs:comment "sd:SPARQL10Query is an sd:Language representing the SPARQL 1.0 Query language." .
+
+sd:UnionDefaultGraph a sd:Feature ;
+                     rdfs:label "Union Default Graph" ;
+                     rdfs:comment "sd:UnionDefaultGraph, when used as the object of the sd:feature property, indicates that the default graph of the dataset used during query and update evaluation (when an explicit dataset is not specified) is comprised of the union of all the named graphs in that dataset." .

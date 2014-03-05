@@ -118,22 +118,21 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
             ?>
         <h2>Data Level metadata</h2>
         <dl class="dl-horizontal">
-            <dt>Triples</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:triples')); ?></dd>
-            <dt>Entities</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:entities')); ?></dd>
-            <dt>Classes</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:classes')); ?></dd>
-            <dt>Properties</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:properties')); ?></dd>
-            <dt>Distinct subjects</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:distinctSubjects')); ?></dd>
-            <dt>Distinct objects</dt>
-            <dd><?= $this->literal( array( 'property' => 'void:distinctObjects')); ?></dd>
+            <?= $this->literal(array('property' => 'void:triples', 'prefix' => '<dt>Triples</dt><dd>', 'suffix' => '</dd>')); ?>
+            <?= $this->literal(array('property' => 'void:entities', 'prefix' => '<dt>Entities</dt><dd>', 'suffix' => '</dd>')); ?>
+            <?= $this->literal(array('property' => 'void:classes', 'prefix' => '<dt>Classes</dt><dd>', 'suffix' => '</dd>')); ?>
+            <?= $this->literal(array('property' => 'void:properties', 'prefix' => '<dt>Properties</dt><dd>', 'suffix' => '</dd>')); ?>
+            <?= $this->literal(array('property' => 'void:distinctSubjects', 'prefix' => '<dt>Distinct subjects</dt><dd>', 'suffix' => '</dd>')); ?>
+            <?= $this->literal(array('property' => 'void:distinctObjects', 'prefix' => '<dt>Distinct objects</dt><dd>', 'suffix' => '</dd>')); ?>
         </dl>
-            <div>
-                TODO: Add output of stephans code here
-            </div>
+        <h3>Triple structure</h3>
+                <script language="javascript">
+                var browser = new StructureBrowser(
+                    '<?= $this->resourceUri ?>',
+                    '<?= $this->url(array('c' => 'structurebrowser', 'a' => 'browse'), array('resourceUri' => $this->resourceUri)) ?>'
+                );
+        </script>
+        <button onClick="browser.draw($('#structure-browser-button'))" id="structure-browser-button" type="button" class="btn btn-default" >Start structure browser</button>
         <h2>Debug <small>Exceptions and other information that occured when querying the endpoint</small></h2>
         <?= $this->literal(array('property' => 'rdfs:comment', 'tag' => 'div', 'class' => 'bs-callout bs-callout-info')) ?>
     </div>

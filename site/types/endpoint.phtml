@@ -25,75 +25,6 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                 <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfn3')) ?>">as Notation 3</a></li>
             </ul>
         </div>
-        <h2>Service Level metadata</h2>
-        <dl class="dl-horizontal">
-            <dt><span class="glyphicon glyphicon-stats"></span> Status</dt>
-            <dd>
-                <?php
-                    $string = $this->query(
-                        array(
-                            'where' => '<' . $this->resourceUri . '> ends:status ?resourceUri. optional {?resourceUri dct:date ?date}',
-                            'template' => 'endpointstatus',
-                            'orderby' => 'desc(?date)',
-                            'limit' => 1
-                        )
-                    );
-                    if (empty($string)) {
-                        echo 'n/a';
-                    } else {
-                        echo $string;
-                    }
-                ?>
-            </dd>
-            <dt><span class="glyphicon glyphicon-pencil"></span> Supported language</dt>
-            <dd>
-                <?php
-                    $string = $this->query(
-                        array(
-                            'where' => '<' . $this->resourceUri . '> sd:supportedLanguage ?resourceUri',
-                            'template' => 'liplain',
-                        )
-                    );
-                    if (empty($string)) {
-                        echo 'n/a';
-                    } else {
-                        echo $string;
-                    }
-                ?>
-            </dd>
-            <dt><span class="glyphicon glyphicon-cog"></span> Features</dt>
-            <dd>
-                <?php
-                    $string = $this->query(
-                        array(
-                            'where' => '<' . $this->resourceUri . '> sd:feature ?resourceUri',
-                            'template' => 'liplain',
-                        )
-                    );
-                    if (empty($string)) {
-                        echo 'n/a';
-                    } else {
-                        echo $string;
-                    }
-                ?>
-            </dd>
-            <dt><span class="glyphicon glyphicon-file"></span> Result formats</dt>
-            <dd>
-                <?php
-                    $string = $this->query(
-                        array(
-                            'where' => '<' . $this->resourceUri . '> sd:resultFormat ?resourceUri',
-                            'template' => 'liplain',
-                        )
-                    );
-                    if (empty($string)) {
-                        echo 'n/a';
-                    } else {
-                        echo $string;
-                    }
-                ?>
-            </dd>
-        </dl>
 
         <h2>Datasets <small>This endpoint provides access to the following datasets</small></h2>
             <?php
@@ -145,49 +76,70 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                 <div class="table-responsive">
                     <table class="table">
                         <tr>
-                            <td class="col-md-5"><b>License:</b></td>
-                            <td><?= $this->literal(array('property' => 'dct:license', 'tag' => 'a', 'class' => 'content')) ?></td>
+                            <th class="col-md-4"><span class="glyphicon glyphicon-stats"></span> Status</th>
+                            <td><?php
+                                    $string = $this->query(
+                                        array(
+                                            'where' => '<' . $this->resourceUri . '> ends:status ?resourceUri. optional {?resourceUri dct:date ?date}',
+                                            'template' => 'endpointstatus',
+                                            'orderby' => 'desc(?date)',
+                                            'limit' => 1
+                                        )
+                                    );
+                                    if (empty($string)) {
+                                        echo 'n/a';
+                                    } else {
+                                        echo $string;
+                                    }
+                                ?></td>
                         </tr>
                         <tr>
-                            <td><b>issued at:</b></td>
-                            <td><?= $this->literal(array('property' => 'dct:issued', 'tag' => 'time', 'class' => 'content')) ?></td>
+                            <th><span class="glyphicon glyphicon-pencil"></span> Supported language</th>
+                            <td><?php
+                                    $string = $this->query(
+                                        array(
+                                            'where' => '<' . $this->resourceUri . '> sd:supportedLanguage ?resourceUri',
+                                            'template' => 'liplain',
+                                        )
+                                    );
+                                    if (empty($string)) {
+                                        echo 'n/a';
+                                    } else {
+                                        echo $string;
+                                    }
+                                ?></td>
                         </tr>
                         <tr>
-                            <td><b>modified at:</b></td>
-                            <td><?= $this->literal(array('property' => 'dct:modified', 'tag' => 'time', 'class' => 'content')) ?></td>
+                            <th><span class="glyphicon glyphicon-cog"></span> Features</th>
+                            <td><?php
+                                    $string = $this->query(
+                                        array(
+                                            'where' => '<' . $this->resourceUri . '> sd:feature ?resourceUri',
+                                            'template' => 'liplain',
+                                        )
+                                    );
+                                    if (empty($string)) {
+                                        echo 'n/a';
+                                    } else {
+                                        echo $string;
+                                    }
+                                ?></td>
                         </tr>
                         <tr>
-                            <td><b>version</b></td>
-                            <td><?= $this->literal(array('property' => 'ling:version', 'tag' => 'div', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>latest Version</b></td>
-                            <td><?= $this->literal(array('property' => 'ling:latestVersion', 'tag' => 'div', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>language</b></td>
-                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>uriSpace</b></td>
-                            <td><?= $this->literal(array('property' => 'void:uriSpace', 'tag' => 'div', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>homepage</b></td>
-                            <td><?= $this->literal(array('property' => 'foaf:homepage', 'tag' => 'a', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>page</b></td>
-                            <td><?= $this->literal(array('property' => 'foaf:page', 'tag' => 'a', 'class' => 'content')) ?></td>
-                        </tr>
-
-                        <tr>
-                            <td><b>sparqlEndpoint</b></td>
-                            <td><?= $this->literal(array('property' => 'void:sparqlEndpoint', 'tag' => 'a', 'class' => 'content')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><b>language</b></td>
-                            <td><?= $this->literal(array('property' => 'ling:language', 'tag' => 'div', 'class' => 'content')) ?></td>
+                            <th><span class="glyphicon glyphicon-file"></span> Result formats</th>
+                            <td><?php
+                                    $string = $this->query(
+                                        array(
+                                            'where' => '<' . $this->resourceUri . '> sd:resultFormat ?resourceUri',
+                                            'template' => 'liplain',
+                                        )
+                                    );
+                                    if (empty($string)) {
+                                        echo 'n/a';
+                                    } else {
+                                        echo $string;
+                                    }
+                                ?></td>
                         </tr>
                     </table>
                 </div>
@@ -199,11 +151,3 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
 
 
 <?php
-//var_dump($this->description);
-?>
-
-<dl class="horizontal-dl">
-    <?php
-    ?>
-</dl>
-

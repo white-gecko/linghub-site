@@ -19,12 +19,10 @@
 }
 
 #infoBoxList td{
-    white-space:pre;
     word-wrap: break-word;
     line-height: 1.7em;
 }
 #infoBoxList .content{
-    white-space:pre;
     word-wrap: break-word;
     line-height: 1.7em;
 }

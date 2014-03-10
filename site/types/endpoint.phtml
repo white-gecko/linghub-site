@@ -26,7 +26,9 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
             </ul>
         </div>
 
+
         <h2>Datasets <small>This endpoint provides access to the following datasets</small></h2>
+            <p>The endpoint provides access to <?= $this->literal(array('property' => 'voidx:datasetCount')) ?> dataset(s).</p>
             <?php
                 $count = $this->count(array('where' => '{<' . $this->resourceUri . '> voidx:providesAccessTo ?resourceUri } union {<' . $this->resourceUri . '> sd:defaultDataset ?resourceUri }'));
                 if ($count > 0) {
@@ -131,6 +133,22 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                                     $string = $this->query(
                                         array(
                                             'where' => '<' . $this->resourceUri . '> sd:resultFormat ?resourceUri',
+                                            'template' => 'liplain',
+                                        )
+                                    );
+                                    if (empty($string)) {
+                                        echo 'n/a';
+                                    } else {
+                                        echo $string;
+                                    }
+                                ?></td>
+                        </tr>
+                        <tr>
+                            <th><span class="glyphicon glyphicon-cloud"></span> external links</th>
+                            <td><?php
+                                    $string = $this->query(
+                                        array(
+                                            'where' => '<' . $this->resourceUri . '> rdfs:seeAlso ?resourceUri',
                                             'template' => 'liplain',
                                         )
                                     );

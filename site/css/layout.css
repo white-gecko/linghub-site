@@ -36,6 +36,14 @@
     border-width: 0 0 5px;
 }
 
+ul, ol {
+    padding-left: 1.5em;
+}
+
+.list-unstyled {
+    padding-left: 1em;
+}
+
 .li-active {
     background-color: #ebebeb
 }

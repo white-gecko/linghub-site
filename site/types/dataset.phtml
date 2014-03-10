@@ -33,6 +33,22 @@ if (substr($this->title, 0, 2) == 'ns') {
                 <li><a href="<?= $this->Url(array('uri' => $this->resourceUri, 'c' => 'resource', 'a' => 'export'), array('f' => 'rdfn3')) ?>">as Notation 3</a></li>
             </ul>
         </div>
+        <div>
+            <strong>Tags/Categories</strong>
+            <ul>
+                <?=
+                $this->query(
+                    array(
+                        'where' => '<' . $this->resourceUri . '> dct:subject ?resourceUri',
+                        'template' => 'category',
+                        'active' => $this->literal(array('property' => 'sd:defaultDataset', 'plain' => 'true')),
+                        'prefix' => '<ul class="list-unstyled">',
+                        'suffix' => '</ul>',
+                    )
+                )
+                ?>
+            </ul>
+        </div>
         <h2>Technology and Provenance Level metadata</h2>
         <dl class="dl-horizontal">
             <dt>Creation date</dt>
@@ -74,7 +90,9 @@ if (substr($this->title, 0, 2) == 'ns') {
             <dt>URI regex pattern</dt>
             <dd><?= $this->literal( array( 'property' => 'void:uriRegexPattern')); ?></dd>
         </dl>
+        <div>
         See also: <?= $this->literal( array( 'property' => 'rdfs:seeAlso')); ?>
+        </div>
 
     </div>
     <div class="col-md-4">
@@ -98,11 +116,3 @@ if (substr($this->title, 0, 2) == 'ns') {
 </div>
 
 <?php
-//var_dump($this->description);
-?>
-
-<dl class="horizontal-dl">
-    <?php
-    ?>
-</dl>
-

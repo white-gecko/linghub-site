@@ -149,7 +149,10 @@ if (substr($this->title, 0, 2) == 'ns' || $this->title == $this->resourceUri) {
                                     $string = $this->query(
                                         array(
                                             'where' => '<' . $this->resourceUri . '> rdfs:seeAlso ?resourceUri',
-                                            'template' => 'liplain',
+                                            'template' => 'extlink',
+                                            'prefix' => '<ul>',
+                                            'suffix' => '</ul>',
+                                            'tag' => 'li',
                                         )
                                     );
                                     if (empty($string)) {

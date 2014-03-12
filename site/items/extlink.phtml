@@ -17,18 +17,22 @@
 
 // prepare vars from the querylist helper
 $resourceUri = $this->resourceUri;
-$title       = $this->title;
+$title       = explode('/', $this->resourceUri)[2];
 
 // if we have a literal item, do not do anything but an li item
 if (!Erfurt_Uri::check($resourceUri)) {
     echo '<span class="">' . $title . '</li>';
 } else {
+    if (isset($this->tag)) {
+        echo '<' . $this->tag . '>';
+    }
 ?>
-    <a href="<?= $this->url($resourceUri) ?>">
-    <span class="tag label label-default" about="<?= $this->curie($resourceUri) ?>">
-        <i class="glyphicon glyphicon-tag"></i> <?= $title ?>
-    </span>
+    <a href="<?= $resourceUri ?>"  about="<?= $this->curie($resourceUri) ?>">
+        <i class="glyphicon glyphicon-link"></i> <?= $title ?>
     </a>
 <?php
+    if (isset($this->tag)) {
+        echo '</' . $this->tag . '>';
+    }
 
 }
